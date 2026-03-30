@@ -1,0 +1,7 @@
+image:
+  repository: antdemoacr.azurecr.io/backend
+  tag: latest
+
+cosmos:
+  secretName: cosmos-secret
+  key: COSMOS_KEY
