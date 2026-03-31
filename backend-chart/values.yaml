@@ -8,6 +8,7 @@ image:
 service:
   type: LoadBalancer   # 🔥 change this
   port: 80
+  targetPort: 8080
 
 cosmos:
   secretName: cosmos-secret
