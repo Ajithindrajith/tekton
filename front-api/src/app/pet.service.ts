@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PetService {
 
-  private apiUrl = 'http://20.117.216.225:80/api/pets';
+  private apiUrl = 'http://20.115.178.157:80/api/pets';
 
   constructor(private http: HttpClient) {}
 
