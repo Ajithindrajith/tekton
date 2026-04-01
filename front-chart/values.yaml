@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: antdemoacr.azurecr.io/front
+  repository: antdemoacr.azurecr.io/front-ui
   tag: latest
   pullPolicy: Always
 
