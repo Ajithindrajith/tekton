@@ -12,10 +12,21 @@ export class PetService {
 
   getPets() {
     return this.http.get<any[]>(this.apiUrl);
-    
+  }
+
+  getPetById(id: string) {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
   addPet(pet: any) {
     return this.http.post(this.apiUrl, pet);
+  }
+
+  updatePet(id: string, pet: any) {
+    return this.http.put(`${this.apiUrl}/${id}`, pet);
+  }
+
+  deletePet(id: string) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

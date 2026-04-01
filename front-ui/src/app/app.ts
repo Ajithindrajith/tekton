@@ -6,35 +6,24 @@ import { PetService } from './pet.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, ],
-  template: `
-    <h2>Add Pet Details</h2>
-
-    <div>
-      <input [(ngModel)]="name" placeholder="Pet Name">
-      <input [(ngModel)]="type" placeholder="Type">
-      <input type="number" [(ngModel)]="age" placeholder="Age">
-      <input [(ngModel)]="owner" placeholder="Owner">
-      <button (click)="submitPet()">Add Pet</button>
-    </div>
-
-    <hr>
-
-    <h3>Pet List</h3>
-    <ul>
-      <li *ngFor="let pet of pets">
-        {{pet.name}} - {{pet.type}} - {{pet.age}} - {{pet.owner}}
-      </li>
-    </ul>
-  `
+  imports: [CommonModule, FormsModule],
+  templateUrl: './app.html',
+  styleUrls: ['./app.css']
 })
 export class AppComponent {
 
   name = '';
-  type = '';
+  type = 'Dog';
   age = 0;
   owner = '';
   pets: any[] = [];
+  editingId: string | null = null;
+  petImages: any = {
+    'Dog': 'https://images.unsplash.com/photo-1633722715463-d30628cfc4c7?w=150&h=150&fit=crop',
+    'Cat': 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=150&h=150&fit=crop',
+    'Rabbit': 'https://images.unsplash.com/photo-1585110396000-c9ffd4c9b12e?w=150&h=150&fit=crop',
+    'Bird': 'https://images.unsplash.com/photo-1552728089-54bdde28bef4?w=150&h=150&fit=crop'
+  };
 
   constructor(private petService: PetService) {}
 
@@ -56,12 +45,44 @@ export class AppComponent {
       owner: this.owner
     };
 
-    this.petService.addPet(pet).subscribe(() => {
-      this.loadPets();
-      this.name = '';
-      this.type = '';
-      this.age = 0;
-      this.owner = '';
-    });
+    if (this.editingId) {
+      this.petService.updatePet(this.editingId, pet).subscribe(() => {
+        this.loadPets();
+        this.resetForm();
+      });
+    } else {
+      this.petService.addPet(pet).subscribe(() => {
+        this.loadPets();
+        this.resetForm();
+      });
+    }
+  }
+
+  editPet(pet: any) {
+    this.name = pet.name;
+    this.type = pet.type;
+    this.age = pet.age;
+    this.owner = pet.owner;
+    this.editingId = pet.id;
+  }
+
+  deletePet(id: string) {
+    if (confirm('Are you sure?')) {
+      this.petService.deletePet(id).subscribe(() => {
+        this.loadPets();
+      });
+    }
+  }
+
+  resetForm() {
+    this.name = '';
+    this.type = 'Dog';
+    this.age = 0;
+    this.owner = '';
+    this.editingId = null;
+  }
+
+  getImage(type: string): string {
+    return this.petImages[type] || this.petImages['Dog'];
   }
 }

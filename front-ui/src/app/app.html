@@ -1,18 +1,43 @@
-<h2>Add Pet</h2>
+<div class="container">
+  <h1>🐕 Pet Management</h1>
 
-<div>
-  <input [(ngModel)]="name" placeholder="Pet Name">
-  <input [(ngModel)]="type" placeholder="Type (Dog/Cat)">
-  <input type="number" [(ngModel)]="age" placeholder="Age">
-  <input [(ngModel)]="owner" placeholder="Owner Name">
-  <button (click)="submitPet()">Add Pet</button>
+  <div class="form-section">
+    <h2>{{ editingId ? 'Edit Pet' : 'Add New Pet' }}</h2>
+    <div class="form-group">
+      <input [(ngModel)]="name" placeholder="Pet Name" class="input-field">
+      <select [(ngModel)]="type" class="input-field">
+        <option>Dog</option>
+        <option>Cat</option>
+        <option>Rabbit</option>
+        <option>Bird</option>
+      </select>
+      <input type="number" [(ngModel)]="age" placeholder="Age" class="input-field">
+      <input [(ngModel)]="owner" placeholder="Owner Name" class="input-field">
+      <button (click)="submitPet()" class="btn-primary">{{ editingId ? 'Update' : 'Add' }} Pet</button>
+      <button *ngIf="editingId" (click)="resetForm()" class="btn-secondary">Cancel</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <h3>Pet List</h3>
+  <div *ngIf="pets.length === 0" class="no-pets">
+    <p>No pets yet. Add one to get started!</p>
+  </div>
+
+  <div class="pets-grid">
+    <div *ngFor="let pet of pets" class="pet-card">
+      <img [src]="getImage(pet.type)" [alt]="pet.name" class="pet-image">
+      <div class="pet-details">
+        <h4>{{ pet.name }}</h4>
+        <p><strong>Type:</strong> {{ pet.type }}</p>
+        <p><strong>Age:</strong> {{ pet.age }} years</p>
+        <p><strong>Owner:</strong> {{ pet.owner }}</p>
+      </div>
+      <div class="pet-actions">
+        <button (click)="editPet(pet)" class="btn-edit">✏️ Edit</button>
+        <button (click)="deletePet(pet.id)" class="btn-delete">🗑️ Delete</button>
+      </div>
+    </div>
+  </div>
 </div>
-
-<hr>
-
-<h3>Pet List</h3>
-<ul>
-  <li *ngFor="let pet of pets">
-    {{pet.name}} - {{pet.type}} - {{pet.age}} - Owner: {{pet.owner}}
-  </li>
-</ul>
