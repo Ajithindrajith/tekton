@@ -18,6 +18,11 @@ spec:
         app.kubernetes.io/name: {{ include "front-chart.name" . }}
 
     spec:
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxSurge: 1        # start 1 new pod before killing old
+          maxUnavailable: 0
       containers:
         - name: front
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

@@ -19,11 +19,11 @@ export class AppComponent {
   pets: any[] = [];
   editingId: string | null = null;
   petImages: any = {
-    'Dog': 'https://images.unsplash.com/photo-1633722715463-d30628cfc4c7?w=150&h=150&fit=crop',
-    'Cat': 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=150&h=150&fit=crop',
-    'Rabbit': 'https://images.unsplash.com/photo-1585110396000-c9ffd4c9b12e?w=150&h=150&fit=crop',
-    'Bird': 'https://images.unsplash.com/photo-1552728089-54bdde28bef4?w=150&h=150&fit=crop'
-  };
+  'Dog': 'https://picsum.photos/seed/dog/200',
+  'Cat': 'https://picsum.photos/seed/cat/200',
+  'Rabbit': 'https://picsum.photos/seed/rabbit/200',
+  'Bird': 'https://picsum.photos/seed/bird/200'
+};
 
   constructor(private petService: PetService) {}
 
