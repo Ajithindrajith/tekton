@@ -19,10 +19,10 @@ export class AppComponent {
   pets: any[] = [];
   editingId: string | null = null;
   petImages: any = {
-  'Dog': 'https://picsum.photos/seed/dog/200',
-  'Cat': 'https://picsum.photos/seed/cat/200',
-  'Rabbit': 'https://picsum.photos/seed/rabbit/200',
-  'Bird': 'https://picsum.photos/seed/bird/200'
+  'Dog': 'https://placedog.net/200/200',
+  'Cat': 'https://placekitten.com/200/200',
+  'Rabbit': 'https://loremflickr.com/200/200/rabbit',
+  'Bird': 'https://loremflickr.com/200/200/bird'
 };
 
   constructor(private petService: PetService) {}
