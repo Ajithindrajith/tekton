@@ -20,7 +20,7 @@ export class AppComponent {
   editingId: string | null = null;
   petImages: any = {
   'Dog': 'https://placedog.net/200/200',
-  'Cat': 'https://placekitten.com/200/200',
+  'Cat': 'https://loremflickr.com/200/200/cat',
   'Rabbit': 'https://loremflickr.com/200/200/rabbit',
   'Bird': 'https://loremflickr.com/200/200/bird'
 };
