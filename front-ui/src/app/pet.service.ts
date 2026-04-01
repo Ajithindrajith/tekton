@@ -12,6 +12,7 @@ export class PetService {
 
   getPets() {
     return this.http.get<any[]>(this.apiUrl);
+    
   }
 
   addPet(pet: any) {

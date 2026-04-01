@@ -1,0 +1,18 @@
+replicaCount: 1
+
+image:
+  repository: antdemoacr.azurecr.io/front
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: LoadBalancer   # 🔥 change this
+  port: 80
+  targetPort: 8080
+
+cosmos:
+  secretName: cosmos-secret
+  key: COSMOS_KEY
+
+keyVault:
+  secretProviderClass: cosmos-kv-secret
