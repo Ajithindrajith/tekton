@@ -33,5 +33,36 @@ namespace PetApi.Services
 
             return pets;
         }
+
+        public async Task<Pet?> GetPetByIdAsync(string id)
+        {
+            try
+            {
+                var response = await _container.ReadItemAsync<Pet>(id, new PartitionKey(id));
+                return response.Resource;
+            }
+            catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
+        }
+
+        public async Task<Pet> AddPetAsync(Pet pet)
+        {
+            var response = await _container.CreateItemAsync(pet, new PartitionKey(pet.id));
+            return response.Resource;
+        }
+
+        public async Task<Pet> UpdatePetAsync(string id, Pet pet)
+        {
+            pet.id = id;
+            var response = await _container.UpsertItemAsync(pet, new PartitionKey(id));
+            return response.Resource;
+        }
+
+        public async Task DeletePetAsync(string id)
+        {
+            await _container.DeleteItemAsync<Pet>(id, new PartitionKey(id));
+        }
     }
 }
