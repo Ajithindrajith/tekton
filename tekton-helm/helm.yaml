@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1
 kind: Task
 metadata:
-  name: helm-CDC
+  name: helm-cdc
   namespace: tkn-demo
 spec:
   workspaces: 

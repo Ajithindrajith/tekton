@@ -23,14 +23,14 @@ spec:
 
     - name: build
       taskRef:
-        name: build-CDC
+        name: build-cdc
       workspaces:
         - name: source
           workspace: source
 
     - name: helm-deploy
       taskRef:
-        name: helm-CDC
+        name: helm-cdc
       params:
         - name: image-tag
           value: "latest"

@@ -1,7 +1,8 @@
 apiVersion: tekton.dev/v1
 kind: Task
 metadata:
-  name: build-CDC
+  name: build-cdc
+  namespace: tkn-demo
 spec:
   workspaces:
     - name: source  
