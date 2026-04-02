@@ -12,7 +12,7 @@ spec:
      - name: repo-url
        value: "https://github.com/Ajithindrajith/tekton.git"
 
-  workspace:
+  workspaces:
      - name: shared-data     
        volumeClaimTemplate:
         spec:
