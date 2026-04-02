@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: git-clone
+  namespace: tkn-demo
+
+spec:
+  workspaces:
+    - name: source
+
+  params:
+    - name: repo-url
+      type: string
+
+  steps:
+    - name: clone
+      image: alpine/git
+      script: |
+        git clone $(params.repo-url) $(workspaces.source.path)/repo

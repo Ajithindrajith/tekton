@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: helm-CDC
+  namespace: tkn-demo
+spec:
+  workspaces: 
+    - name: source
+
+  params:
+    - name: image-tag
+      type: string
+      default: "latest"  
+  steps:
+    - name: helm-cdc
+      image: alpine/helm:3.12.0
+      script: |
+        #!/bin/sh
+        echo "Deploying Helm chart..."
+        helm upgrade --install cdc-feed \
+          $(workspaces.source.path)/repo/cdc-helm \
+          --namespace tkn-demo \
+          --set image.tag=$(params.image-tag) \

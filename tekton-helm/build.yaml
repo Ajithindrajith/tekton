@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: build-CDC
+spec:
+  workspaces:
+    - name: source  
+  volumes:
+    - name: docker-config
+      secret:
+        secretName: acr-demo-secret
+        items:
+          - key: .dockerconfigjson
+            path: config.json
+
+  steps:
+    - name: build-cdc
+      image: acr.io/kaniko-project/executor
+      volumeMounts:
+        - name: docker-config
+          mountPath: /kaniko/.docker/
+      args:
+        - "--dockerfile=Dockerfile"
+        - "--context=$(workspaces.source.path)/repo/cdc-feed"
+        - "--destination=antdemoacr.azurecr.io/cdc-feed:latest"              
+       

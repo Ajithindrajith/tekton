@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: cdc-pipeline-run
+  namespace: tkn-demo
+spec:
+  pipelineRef:  
+    name: cdc-pipeline
+  taskRunTemplate:
+    serviceAccountName: sa
+  params:
+     - name: repo-url
+       value: "https://github.com/Ajithindrajith/tekton.git"
+
+  workspace:
+     - name: shared-data     
+       volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi

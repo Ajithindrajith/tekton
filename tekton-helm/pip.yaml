@@ -1,0 +1,39 @@
+apiVersion: tekton.dev/v1
+kind: pipeline
+metadata:
+  name: cdc-pipeline
+  namespace: tkn-demo
+spec:
+  workspaces:
+    - name: source
+
+  params:
+    - name: repo-url
+      type: string
+  tasks:
+    - name: clone
+      taskRef:
+        name: git-clone
+      params:
+        - name: repo-url
+          value: $(params.repo-url)
+      workspaces:
+        - name: source
+          workspace: source
+
+    - name: build
+      taskRef:
+        name: build-CDC
+      workspaces:
+        - name: source
+          workspace: source
+
+    - name: helm-deploy
+      taskRef:
+        name: helm-CDC
+      params:
+        - name: image-tag
+          value: "latest"
+      workspaces:
+        - name: source
+          workspace: source

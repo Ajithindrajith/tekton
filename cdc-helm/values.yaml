@@ -1,0 +1,11 @@
+replicaCount: 1
+image:
+  repository: antdemoacr.azurecr.io/cdc-feed
+  tag: latest
+  pullPolicy: Always
+
+cosmos:
+  secretName: cosmos-secret
+  key: COSMOS_KEY
+keyVault:
+  secretProviderClass: cosmos-kv-secret  
