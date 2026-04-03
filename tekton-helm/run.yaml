@@ -13,7 +13,7 @@ spec:
        value: "https://github.com/Ajithindrajith/tekton.git"
 
   workspaces:
-     - name: shared-data     
+     - name: source    
        volumeClaimTemplate:
         spec:
           accessModes:
