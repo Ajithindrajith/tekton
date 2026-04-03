@@ -16,7 +16,7 @@ spec:
 
   steps:
     - name: build-cdc
-      image: acr.io/kaniko-project/executor
+      image: gcr.io/kaniko-project/executor
       volumeMounts:
         - name: docker-config
           mountPath: /kaniko/.docker/
