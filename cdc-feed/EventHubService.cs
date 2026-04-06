@@ -18,8 +18,18 @@ public class EventHubService
 
         using EventDataBatch batch = await producer.CreateBatchAsync();
 
-        batch.TryAdd(new EventData(Encoding.UTF8.GetBytes(message)));
+        var eventData = new EventData(Encoding.UTF8.GetBytes(message));
+
+        if (!batch.TryAdd(eventData))
+        {
+            Console.WriteLine("❌ Event too large for batch!");
+            return;
+        }
+
+        Console.WriteLine("✅ Event added to batch");
 
         await producer.SendAsync(batch);
+
+        Console.WriteLine("🚀 Event sent to Event Hub");
     }
 }
