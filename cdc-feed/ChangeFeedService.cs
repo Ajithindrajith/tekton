@@ -30,7 +30,7 @@ public class ChangeFeedService
 
         Console.WriteLine("Change Feed Processor started...");
     }
-
+    private readonly EventHubService eventHub = new EventHubService();
     private async Task HandleChangesAsync(
         IReadOnlyCollection<dynamic> changes,
         CancellationToken cancellationToken)
@@ -40,6 +40,7 @@ public class ChangeFeedService
             Console.WriteLine($"Change detected: {item}");
 
             // 👉 future: send to Event Hub
+            await eventHub.SendAsync(item.ToString());
         }
     }
 }
