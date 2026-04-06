@@ -3,3 +3,7 @@ az eventhubs eventhub create --name pet-events --namespace-name pet-eh-namespace
 az eventhubs namespace authorization-rule keys list --resource-group ant-aks-demo --namespace-name pet-eh-namespace --name RootManageSharedAccessKey
 
 
+
+az eventhubs namespace authorization-rule keys list --resource-group ant-aks-demo --namespace-name pet-eh-namespace --name RootManageSharedAccessKey
+
+

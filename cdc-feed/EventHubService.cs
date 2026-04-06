@@ -16,7 +16,7 @@ public class EventHubService
     {
         try
         {
-            await using var producer = new EventHubProducerClient(connectionString, eventHubName);
+            await using var producer = new EventHubProducerClient(connectionString, "pet-events");
 
             using EventDataBatch batch = await producer.CreateBatchAsync();
 
