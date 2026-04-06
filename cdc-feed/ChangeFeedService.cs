@@ -9,7 +9,9 @@ public class ChangeFeedService
     public async Task StartAsync()
     {
         // 🔐 Read from mounted file (CSI)
-        var connectionString = await File.ReadAllTextAsync("/mnt/secrets/COSMOSKEY");
+        var connectionString = (await File.ReadAllTextAsync("/mnt/secrets/COSMOSKEY")).Trim();
+
+        Console.WriteLine($"Conn Length: {connectionString.Length}");
 
         CosmosClient client = new CosmosClient(connectionString);
 

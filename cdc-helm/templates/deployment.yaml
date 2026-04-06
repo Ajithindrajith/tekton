@@ -20,12 +20,6 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 80
-          env:
-            - name: Cosmos__key
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.cosmos.secretName }}
-                  key: {{ .Values.cosmos.key }}
           volumeMounts:
             - name: secrets-store
               mountPath: "/mnt/secrets"
