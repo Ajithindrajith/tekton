@@ -1,5 +1,5 @@
 apiVersion: tekton.dev/v1
-kind: pipeline
+kind: Pipeline
 metadata:
   name: cdc-pipeline
   namespace: tkn-demo
@@ -24,6 +24,8 @@ spec:
     - name: build
       taskRef:
         name: build-cdc
+      runAfter:
+        - clone  
       workspaces:
         - name: source
           workspace: source
@@ -31,6 +33,8 @@ spec:
     - name: helm-deploy
       taskRef:
         name: helm-cdc
+      runAfter:
+        - build  
       params:
         - name: image-tag
           value: "latest"
