@@ -15,13 +15,18 @@ spec:
             path: config.json
 
   steps:
+    - name: debug
+      image : alpine
+      script: |
+        echo "Debugging workspace contents"
+        ls -la $(workspaces.source.path)/repo
     - name: build-cdc
       image: gcr.io/kaniko-project/executor
       volumeMounts:
         - name: docker-config
           mountPath: /kaniko/.docker/
       args:
-        - "--dockerfile=Dockerfile"
-        - "--context=$(workspaces.source.path)/repo/cdc-feed"
-        - "--destination=antdemoacr.azurecr.io/cdc-feed:latest"              
+         - "--dockerfile=$(workspaces.source.path)/repo/cdc-feed/Dockerfile"
+         - "--context=$(workspaces.source.path)/repo/cdc-feed"
+         - "--destination=antdemoacr.azurecr.io/cdc-feed:latest"           
        
