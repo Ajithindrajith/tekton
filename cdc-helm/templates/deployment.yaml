@@ -1,39 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-   name: {{ include "cdc-helm.fullname" . }}
-   labels:
-     {{- include "cdc-helm.labels" . | nindent 4 }}
+  name: {{ include "cdc-helm.fullname" . }}
+  labels:
+    {{- include "cdc-helm.labels" . | nindent 4 }}
 spec:
-     replicas: {{ .Values.replicaCount }}
-     selector:
-         matchLabels:
-         app.kubernetes.io/name: {{ include "cdc-helm.name" . }}
-     template:
-         metadata:
-         labels:
-             app.kubernetes.io/name: {{ include "cdc-helm.name" . }}
-         spec:
-         containers:
-           - name: cdc-feed
-             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-             imagePullPolicy: {{ .Values.image.pullPolicy }}
-             ports:
-                 - containerPort: 80
-             env:
-                 - name: Cosmos__key
-                   valueFrom:
-                     secretKeyRef:
-                       name: {{ .Values.cosmos.secretName }}
-                       key: {{ .Values.cosmos.key }}
-             volumeMounts:
-                 - name: secrets-store
-                   mountPath: "/mnt/secrets"
-                   readOnly: true             
-          volumes:
-             - name: secrets-store
-               csi:
-                 driver: secrets-store.csi.k8s.io
-                 readOnly: true
-                 volumeAttributes:
-                   secretProviderClass: {{ .Values.keyVault.secretProviderClass }}                       
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "cdc-helm.name" . }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "cdc-helm.name" . }}
+    spec:
+      containers:
+        - name: cdc-feed
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+          env:
+            - name: Cosmos__key
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.cosmos.secretName }}
+                  key: {{ .Values.cosmos.key }}
+          volumeMounts:
+            - name: secrets-store
+              mountPath: "/mnt/secrets"
+              readOnly: true
+      volumes:
+        - name: secrets-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: {{ .Values.keyVault.secretProviderClass }}                       
