@@ -14,22 +14,29 @@ public class EventHubService
 
     public async Task SendAsync(string message)
     {
-        await using var producer = new EventHubProducerClient(connectionString, eventHubName);
-
-        using EventDataBatch batch = await producer.CreateBatchAsync();
-
-        var eventData = new EventData(Encoding.UTF8.GetBytes(message));
-
-        if (!batch.TryAdd(eventData))
+        try
         {
-            Console.WriteLine("❌ Event too large for batch!");
-            return;
+            await using var producer = new EventHubProducerClient(connectionString, eventHubName);
+
+            using EventDataBatch batch = await producer.CreateBatchAsync();
+
+            var eventData = new EventData(Encoding.UTF8.GetBytes(message));
+
+            if (!batch.TryAdd(eventData))
+            {
+                Console.WriteLine("❌ Event too large!");
+                return;
+            }
+
+            Console.WriteLine("✅ Event added to batch");
+
+            await producer.SendAsync(batch);
+
+            Console.WriteLine("🚀 Event sent to Event Hub");
         }
-
-        Console.WriteLine("✅ Event added to batch");
-
-        await producer.SendAsync(batch);
-
-        Console.WriteLine("🚀 Event sent to Event Hub");
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ EventHub Error: {ex.Message}");
+        }
     }
 }

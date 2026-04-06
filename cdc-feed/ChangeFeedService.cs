@@ -1,24 +1,24 @@
-using System.Net;
 using Microsoft.Azure.Cosmos;
+using Newtonsoft.Json;
 
 public class ChangeFeedService
 {
-    private readonly string databaseName = "PetDB";
+    private readonly string databaseName = "petdb";
     private readonly string containerName = "pets";
     private readonly string leaseContainerName = "leases";
 
+    private readonly EventHubService eventHub = new EventHubService();
+
     public async Task StartAsync()
     {
-        // 🔐 Read from mounted file (CSI)
-        var key = (await File.ReadAllTextAsync("/mnt/secrets/COSMOSKEY")).Trim();
-
-        var endpoint  = "https://democosmosant.documents.azure.com:443/";
+        var key = File.ReadAllText("/mnt/secrets/COSMOSKEY").Trim();
+        var endpoint = "https://democosmosant.documents.azure.com:443/";
 
         CosmosClient client = new CosmosClient(endpoint, key);
 
-        var database = client.GetDatabase("petdb");
-        var container = database.GetContainer("pets");
-        var leaseContainer = database.GetContainer("leases");
+        var database = client.GetDatabase(databaseName);
+        var container = database.GetContainer(containerName);
+        var leaseContainer = database.GetContainer(leaseContainerName);
 
         var processor = container
             .GetChangeFeedProcessorBuilder<dynamic>("pet-processor", HandleChangesAsync)
@@ -30,7 +30,7 @@ public class ChangeFeedService
 
         Console.WriteLine("Change Feed Processor started...");
     }
-    private readonly EventHubService eventHub = new EventHubService();
+
     private async Task HandleChangesAsync(
         IReadOnlyCollection<dynamic> changes,
         CancellationToken cancellationToken)
@@ -39,8 +39,20 @@ public class ChangeFeedService
         {
             Console.WriteLine($"Change detected: {item}");
 
-            // 👉 future: send to Event Hub
-            await eventHub.SendAsync(item.ToString());
+            try
+            {
+                Console.WriteLine("📤 Sending to Event Hub...");
+
+                string json = JsonConvert.SerializeObject(item);
+
+                await eventHub.SendAsync(json);
+
+                Console.WriteLine("✅ Sent to Event Hub");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Error: {ex.Message}");
+            }
         }
     }
 }
