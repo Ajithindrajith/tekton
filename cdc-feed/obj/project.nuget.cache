@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oKylQX0Kj0a5YJTugLDlf2k2O3EvkH1LKYQqa4CYnbLwMGbetBvW45pCha/2pt1SOT9WjJaC40f/3fAZ99B/cg==",
+  "dgSpecHash": "iEQ5En+Zs8Js/2THYyk81Yw/Y+DT/zqobj4ERMyAGA9OS3K/C9mBUhMq/CS/pi5XmQOR02RbGAFkp8TJDKQj4g==",
   "success": true,
   "projectFilePath": "D:\\project\\demo\\tekton\\git-hub-repos\\tekton\\cdc-feed\\cdc-feed.csproj",
   "expectedPackageFiles": [
@@ -36,6 +36,7 @@
     "C:\\Users\\Ajith\\.nuget\\packages\\microsoft.extensions.options.configurationextensions\\8.0.0\\microsoft.extensions.options.configurationextensions.8.0.0.nupkg.sha512",
     "C:\\Users\\Ajith\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "C:\\Users\\Ajith\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\Ajith\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\Ajith\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\Ajith\\.nuget\\packages\\system.clientmodel\\1.1.0\\system.clientmodel.1.1.0.nupkg.sha512",
     "C:\\Users\\Ajith\\.nuget\\packages\\system.collections.immutable\\1.7.0\\system.collections.immutable.1.7.0.nupkg.sha512",
