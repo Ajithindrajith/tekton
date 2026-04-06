@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.Azure.Cosmos;
 
 public class ChangeFeedService
@@ -9,15 +10,15 @@ public class ChangeFeedService
     public async Task StartAsync()
     {
         // 🔐 Read from mounted file (CSI)
-        var connectionString = (await File.ReadAllTextAsync("/mnt/secrets/COSMOSKEY")).Trim();
+        var key = (await File.ReadAllTextAsync("/mnt/secrets/COSMOSKEY")).Trim();
 
-        Console.WriteLine($"Conn Length: {connectionString.Length}");
+        var endpoint  = "https://democosmosant.documents.azure.com:443/";
 
-        CosmosClient client = new CosmosClient(connectionString);
+        CosmosClient client = new CosmosClient(endpoint, key);
 
-        var database = client.GetDatabase(databaseName);
-        var container = database.GetContainer(containerName);
-        var leaseContainer = database.GetContainer(leaseContainerName);
+        var database = client.GetDatabase("petdb");
+        var container = database.GetContainer("pets");
+        var leaseContainer = database.GetContainer("leases");
 
         var processor = container
             .GetChangeFeedProcessorBuilder<dynamic>("pet-processor", HandleChangesAsync)
