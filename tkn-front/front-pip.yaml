@@ -1,0 +1,41 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: build-front-pipeline
+  namespace: tkn
+spec:
+  workspaces:
+    - name: shared-data
+  params:
+    - name: repo-url  
+  tasks:
+    - name: clone-repo
+      taskRef:
+        name: git-clone
+      params:
+        - name: repo-url
+          value: "$(params.repo-url)"
+      workspaces:
+        - name: source
+          workspace: shared-data      
+
+    - name: build-front
+      runAfter:
+       - clone-repo
+      taskRef:
+       name: build-front
+      workspaces:
+       - name: source
+         workspace: shared-data 
+
+    - name: deploy
+      runAfter: 
+       - build-front
+      taskRef:
+       name: helm-deploy-front
+      params:
+       - name: image-tag
+         value: "latest"
+      workspaces:
+       - name: source
+         workspace: shared-data        

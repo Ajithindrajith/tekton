@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: build-front
+  namespace: tkn
+spec:
+  workspaces:
+    - name: source
+
+  volumes:
+    - name: docker-config
+      secret:
+        secretName: acr-secret
+        items:
+          - key: .dockerconfigjson
+            path: config.json   
+  steps:
+    - name: build
+      image: gcr.io/kaniko-project/executor
+      volumeMounts:
+        - name: docker-config
+          mountPath: /kaniko/.docker
+      args:
+        - "--dockerfile=Dockerfile"
+        - "--context=$(workspaces.source.path)/repo/front-ui"
+        - "--destination=antdemoacr.azurecr.io/front-ui:latest"    

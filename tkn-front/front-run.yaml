@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: build-front-pipeline-run
+  namespace: tkn
+
+spec:
+  pipelineRef:
+    name: build-front-pipeline
+
+  taskRunTemplate:
+    serviceAccountName: sa   # ✅ Correct placement
+
+  params:
+    - name: repo-url
+      value: "https://github.com/Ajithindrajith/tekton.git"
+
+  workspaces:
+    - name: shared-data
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi

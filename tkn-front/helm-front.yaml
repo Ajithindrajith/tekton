@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: helm-deploy-front
+  namespace: tkn
+spec:
+  workspaces:
+    - name: source
+  params:
+    - name: image-tag
+  steps:
+    - name: deploy
+      image: alpine/helm:3.12.0
+      script: |
+        #!/bin/sh
+        echo "Deploying Helm chart for Frontend..."
+
+        helm upgrade --install frontend \
+          $(workspaces.source.path)/repo/front-chart \
+          --namespace tkn \
+          --set image.tag=$(params.image-tag)      

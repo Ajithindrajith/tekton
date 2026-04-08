@@ -9,7 +9,7 @@ spec:
   volumes:
     - name: docker-config
       secret:
-        secretName: acr-demo-secret
+        secretName: acr-secret
         items:
           - key: .dockerconfigjson
             path: config.json
