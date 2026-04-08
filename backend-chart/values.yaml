@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: antdemoacr.azurecr.io/backend
+  repository: antdemonew.azurecr.io/backend
   tag: latest
   pullPolicy: Always
 

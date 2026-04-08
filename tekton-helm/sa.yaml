@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata: 
+  name: sa
+  namespace: tkn
+secrets:
+  - name: acr-secret  
+imagePullSecrets:
+  - name: acr-secret  

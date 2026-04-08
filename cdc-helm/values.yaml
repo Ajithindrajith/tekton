@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: antdemoacr.azurecr.io/cdc-feed
+  repository: antdemonew.azurecr.io/cdc-feed
   tag: latest
   pullPolicy: Always
 
