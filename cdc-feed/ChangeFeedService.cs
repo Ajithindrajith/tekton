@@ -12,7 +12,7 @@ public class ChangeFeedService
     public async Task StartAsync()
     {
         var key = File.ReadAllText("/mnt/secrets/COSMOSKEY").Trim();
-        var endpoint = "https://democosmosant.documents.azure.com:443/";
+        var endpoint = "https://antdemonew.documents.azure.com:443/";
 
         CosmosClient client = new CosmosClient(endpoint, key);
 
